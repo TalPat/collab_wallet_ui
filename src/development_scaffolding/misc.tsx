@@ -1,0 +1,2 @@
+// tslint:disable-next-line: max-line-length
+export const adminToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoRGF0YSI6eyJpZCI6MSwidXNlck5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE1NTc4MzU0NzUsImV4cCI6MzU1NzgzOTA3NX0.kudO6Z_KBv9ic435Bfc3buk49zCUHBeGT1X1m_oKV9A'
