@@ -1,35 +1,35 @@
 export interface IAction {
   type: string,
   payload: {
-    accountName?: string,
+    accountID?: number,
     token?: string,
-    userName?: string,
+    userID?: number,
   }
 }
 
-export const adminLogin = (userName: string, token: string) => {
+export const adminLogin = (userID: number, token: string) => {
   return {
     payload: {
       token,
-      userName,
+      userID,
     },
     type: 'ADMIN_LOGIN',
   }
 }
 
-export const selectUser = (userName: string) => {
+export const selectUser = (userID: number) => {
   return {
     payload: {
-      userName,
+      userID,
     },
     type: 'SELECT_USER',
   }
 }
 
-export const selectAccount = (accountName: string) => {
+export const selectAccount = (accountID: number) => {
   return {
     payload: {
-      accountName,
+      accountID,
     },
     type: 'SELECT_ACCOUNT',
   }
