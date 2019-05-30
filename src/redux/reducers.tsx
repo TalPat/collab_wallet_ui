@@ -2,7 +2,17 @@ import { IAction } from './actionCreators'
 import axios from 'axios'
 import {adminToken} from "../development_scaffolding/misc"
 
-export function sessionReducer(action: IAction) {
+interface ISession {
+  active: boolean,
+  token: string | undefined,
+}
+
+const defaultSession: ISession = {
+  active: false,
+  token: '',
+}
+
+export function sessionReducer(oldSession = defaultSession, action: IAction): ISession {
   switch (action.type) {
     case 'ADMIN_LOGIN':
       return {
@@ -15,53 +25,53 @@ export function sessionReducer(action: IAction) {
         token: '',
       }
   }
-  return // something
+  return oldSession
 }
 
-export function usersListReducer(action: IAction) {
+export function usersListReducer(oldUsersList = [], action: IAction) {
   switch (action.type) {
     case 'UPDATE_USERS_LIST':
       return action.payload.arrayOfUsers
   }
-  return // something
+  return oldUsersList
 }
 
-export function selectedUserReducer(action: IAction) {
+export function selectedUserReducer(oldSelectedUser = '', action: IAction) {
   switch (action.type) {
     case 'SELECT_USER':
       return action.payload.userID
   }
-  return // something
+  return oldSelectedUser
 }
 
-export function accountsListReducer(action: IAction) {
+export function accountsListReducer(oldAccountsList = [], action: IAction) {
   switch (action.type) {
     case 'UPDATE_ACCOUNTS_LIST':
       return action.payload.arrayOfAccounts
   }
-  return // something
+  return oldAccountsList
 }
 
-export function selectedAccountReducer(action: IAction) {
+export function selectedAccountReducer(oldSelectedAccount = [], action: IAction) {
   switch (action.type) {
     case 'SELECT_ACCOUNT':
       return action.payload.accountID
   }
-  return // something
+  return oldSelectedAccount
 }
 
-export function transactionsListReducer(action: IAction) {
+export function transactionsListReducer(oldTransactionsList = [], action: IAction) {
   switch (action.type) {
     case 'UPDATE_TRANSACTIONS_LIST':
       return action.payload.arrayOfTransactions
   }
-  return // something
+  return oldTransactionsList
 }
 
-export function activeViewReducer(action: IAction) {
+export function activeViewReducer(oldView = 'listView', action: IAction) {
   switch (action.type) {
     case 'SELECT_ACTIVE_VIEW':
       return action.payload.view
   }
-  return // something
+  return oldView
 }
