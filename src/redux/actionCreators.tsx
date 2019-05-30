@@ -49,7 +49,7 @@ export function adminLogin(token: string): IAction {
 export function adminLogout(): IAction {
   return {
     payload: {},
-    type: 'ADMIN_LOGIN',
+    type: 'ADMIN_LOGOUT',
   }
 }
 
