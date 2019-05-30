@@ -7,7 +7,7 @@ export interface IAction {
   }
 }
 
-export const adminLogin = (userID: number, token: string) => {
+export function adminLogin(userID: number, token: string) {
   return {
     payload: {
       token,
@@ -17,7 +17,7 @@ export const adminLogin = (userID: number, token: string) => {
   }
 }
 
-export const selectUser = (userID: number) => {
+export function selectUser(userID: number) {
   return {
     payload: {
       userID,
@@ -26,7 +26,7 @@ export const selectUser = (userID: number) => {
   }
 }
 
-export const selectAccount = (accountID: number) => {
+export function selectAccount(accountID: number) {
   return {
     payload: {
       accountID,

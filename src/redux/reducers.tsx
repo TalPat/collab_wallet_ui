@@ -2,70 +2,110 @@ import { IAction } from './actionCreators'
 import axios from 'axios'
 import {adminToken} from "../development_scaffolding/misc"
 
-export const accountsListReducer = (action: IAction) => {
+export function accountsListReducer(action: IAction) {
   switch (action.type) {
     case 'ADMIN_LOGIN':
       return []
     case 'SELECT_ACCOUNT':
-      // somehting
+      axios({
+        headers: {
+          'Authorization': 'Bearer ' + adminToken,
+          'Content-Type': 'application/json',
+        },
+        method: 'get',
+        url: 'http://localhost:3000/accounts/' + action.payload.accountID,
+      })
+      .then((res) => {
+        return (res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      break
     case 'SELECT_USER':
       // something
-    return // something
-  }
+    }
+  return // something
 }
 
-export const selectedAccountReducer = (action: IAction) => {
+export function selectedAccountReducer(action: IAction) {
+  switch (action.type) {
+    case 'ADMIN_LOGIN':
+      return []
+    case 'SELECT_ACCOUNT':
+      return action.payload.accountID
+    case 'SELECT_USER':
+      // something
+    }
+  return // something
+}
+
+export function selectedUserReducer(action: IAction) {
   switch (action.type) {
     case 'ADMIN_LOGIN':
         return []
     case 'SELECT_ACCOUNT':
-      // somehting
+      axios({
+        headers: {
+          'Authorization': 'Bearer ' + adminToken,
+          'Content-Type': 'application/json',
+        },
+        method: 'get',
+        url: 'http://localhost:3000/accounts/' + action.payload.accountID,
+      })
+      .then((res) => {
+        return (res.data.owner)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      break
     case 'SELECT_USER':
-      // something
-    return // something
-  }
+      return action.payload.userID
+    }
+  return // something
 }
 
-export const selectedUserReducer = (action: IAction) => {
-  switch (action.type) {
-    case 'ADMIN_LOGIN':
-        return []
-    case 'SELECT_ACCOUNT':
-      // somehting
-    case 'SELECT_USER':
-      // something
-    return // something
-  }
-}
-
-export const sessionReducer = (action: IAction) => {
+export function sessionReducer(action: IAction) {
   switch (action.type) {
     case 'ADMIN_LOGIN':
       return {
         token: action.payload.token,
         userID: action.payload.userID,
       }
-    case 'SELECT_ACCOUNT':
-      // somehting
     case 'SELECT_USER':
       // something
-    return // something
-  }
+    }
+  return // something
 }
 
-export const transactionListReducer = (action: IAction) => {
+export function transactionListReducer(action: IAction) {
   switch (action.type) {
     case 'ADMIN_LOGIN':
         return []
     case 'SELECT_ACCOUNT':
-      // somehting
+      axios({
+        headers: {
+          'Authorization': 'Bearer ' + adminToken,
+          'Content-Type': 'application/json',
+        },
+        method: 'get',
+        url: 'http://localhost:3000/transactions/' + action.payload.accountID,
+      })
+      .then((res) => {
+        return (res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      break
     case 'SELECT_USER':
-      // something
-    return // something
-  }
+          // something
+    }
+  return // something
 }
 
-export const usersListReducer = (action: IAction) => {
+export function usersListReducer(action: IAction) {
   switch (action.type) {
     case 'ADMIN_LOGIN':
         axios({
@@ -75,7 +115,7 @@ export const usersListReducer = (action: IAction) => {
           },
           method: 'get',
           url: 'http://localhost:3000/users',
-        }) // .then(function(response){return response.json() })
+        })
         .then((res) => {
           return (res.data)
         })
@@ -83,8 +123,6 @@ export const usersListReducer = (action: IAction) => {
           console.log(err)
         })
         break
-    case 'SELECT_ACCOUNT':
-      // somehting
     case 'SELECT_USER':
       // something
     return // something
