@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { login } from '../actions/index'
+import { login , selectActiveView } from '../actions/index'
 import axios from 'axios'
+import InfoList from './InfoList'
 
 function mapDispatchToProps(dispatch) {
   return ({
-    login: (article) => dispatch(login(article))
+    login: (session) => dispatch(login(session)),
+    selectActiveView: (view) => dispatch(selectActiveView(view))
   })
 }
 
@@ -46,6 +48,7 @@ class ConnectedForm extends Component {
       // window.location.href = "/";
       this.props.login({ token: response.data.token, active: true })
       /*** */this.setState({username : 'you have logged in now'})
+      this.props.selectActiveView(InfoList)
     })
     .catch(error => {
       console.log(error);
