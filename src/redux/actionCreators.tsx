@@ -1,43 +1,6 @@
-import { number } from "prop-types";
+import { AdminLoginAction, AdminLogoutAction, User, UpdateAccountsListAction, UpdateUsersListAction, SelectUserAction, WalletAccount, SelectAccountAction, Transaction, UpdateTransactionsListAction, SelectActiveViewAction } from './types'
 
-interface IUser {
-  id: number,
-  userName: string,
-  role: string,
-  dateCreated: string,
-  deletedAt: string,
-}
-
-interface IAccount {
-  id: number,
-  name: string,
-  owner: number,
-  deletedAt: string,
-  lastUpdate: string,
-}
-
-interface ITransaction {
-  id: number,
-  debitAccountID: number,
-  creditAccountID: number,
-  amount: number,
-  date: string,
-}
-
-export interface IAction {
-  payload: {
-    accountID?: number,
-    token?: string,
-    userID?: number,
-    arrayOfUsers?: IUser[],
-    arrayOfAccounts?: IAccount[],
-    arrayOfTransactions?: ITransaction[],
-    view?: string,
-  },
-  type: string,
-}
-
-export function adminLogin(token: string): IAction {
+export function adminLogin(token: string): AdminLoginAction {
   return {
     payload: {
       token,
@@ -46,14 +9,13 @@ export function adminLogin(token: string): IAction {
   }
 }
 
-export function adminLogout(): IAction {
+export function adminLogout(): AdminLogoutAction {
   return {
-    payload: {},
     type: 'ADMIN_LOGOUT',
   }
 }
 
-export function updateUsersList(arrayOfUsers: IUser[]): IAction {
+export function updateUsersList(arrayOfUsers: User[]): UpdateUsersListAction {
   return {
     payload: {
       arrayOfUsers,
@@ -62,7 +24,7 @@ export function updateUsersList(arrayOfUsers: IUser[]): IAction {
   }
 }
 
-export function selectUser(userID: number): IAction {
+export function selectUser(userID: number): SelectUserAction {
   return {
     payload: {
       userID,
@@ -71,7 +33,7 @@ export function selectUser(userID: number): IAction {
   }
 }
 
-export function updateAccountsList(arrayOfAccounts: IAccount[]): IAction {
+export function updateAccountsList(arrayOfAccounts: WalletAccount[]): UpdateAccountsListAction {
   return {
     payload: {
       arrayOfAccounts,
@@ -80,7 +42,7 @@ export function updateAccountsList(arrayOfAccounts: IAccount[]): IAction {
   }
 }
 
-export function selectAccount(accountID: number): IAction {
+export function selectAccount(accountID: number): SelectAccountAction {
   return {
     payload: {
       accountID,
@@ -89,7 +51,7 @@ export function selectAccount(accountID: number): IAction {
   }
 }
 
-export function updateTransactionsList(arrayOfTransactions: ITransaction[]): IAction {
+export function updateTransactionsList(arrayOfTransactions: Transaction[]): UpdateTransactionsListAction {
   return {
     payload: {
       arrayOfTransactions,
@@ -98,7 +60,7 @@ export function updateTransactionsList(arrayOfTransactions: ITransaction[]): IAc
   }
 }
 
-export function selectActiveView(newView: string): IAction {
+export function selectActiveView(newView: string): SelectActiveViewAction {
   return {
     payload: {
       view: newView,

@@ -1,77 +1,92 @@
-import { IAction } from './actionCreators'
-import axios from 'axios'
-import {adminToken} from "../development_scaffolding/misc"
+import {combineReducers, createStore, AnyAction} from 'redux'
+import { AdminLoginAction, AdminLogoutAction, SelectActiveViewAction, User, AppSession, ADMIN_LOGIN, ADMIN_LOGOUT, UPDATE_USERS_LIST, SELECT_USER, SELECT_ACCOUNT, UPDATE_ACCOUNTS_LIST, UPDATE_TRANSACTIONS_LIST, SELECT_ACTIVE_VIEW, WalletAccount, Transaction } from './types';
+import { selectActiveView } from './actionCreators';
 
-interface ISession {
-  active: boolean,
-  token: string | undefined,
-}
-
-const defaultSession: ISession = {
+const defaultSession: AppSession = {
   active: false,
-  token: '',
+  token: ''
 }
 
-export function sessionReducer(oldSession = defaultSession, action: IAction): ISession {
+function sessionReducer(oldSession = defaultSession, action: AdminLoginAction | AdminLogoutAction): AppSession {
   switch (action.type) {
-    case 'ADMIN_LOGIN':
+    case ADMIN_LOGIN:
       return {
         active: true,
         token: action.payload.token,
       }
-    case 'ADMIN_LOGOUT':
+    case ADMIN_LOGOUT:
       return {
         active: false,
         token: '',
       }
+    default:  
+      return oldSession
   }
-  return oldSession
 }
 
-export function usersListReducer(oldUsersList = [], action: IAction) {
+function usersListReducer (oldUsersList: User[] = [], action: AnyAction): User[] {
   switch (action.type) {
-    case 'UPDATE_USERS_LIST':
+    case UPDATE_USERS_LIST:
       return action.payload.arrayOfUsers
   }
   return oldUsersList
 }
 
-export function selectedUserReducer(oldSelectedUser = '', action: IAction) {
+function selectedUserReducer(oldSelectedUser: number = 0, action: AnyAction): number {
   switch (action.type) {
-    case 'SELECT_USER':
+    case SELECT_USER:
       return action.payload.userID
   }
   return oldSelectedUser
 }
 
-export function accountsListReducer(oldAccountsList = [], action: IAction) {
+function accountsListReducer(oldAccountsList: WalletAccount[] = [], action: AnyAction): WalletAccount[] {
   switch (action.type) {
-    case 'UPDATE_ACCOUNTS_LIST':
+    case UPDATE_ACCOUNTS_LIST:
       return action.payload.arrayOfAccounts
   }
   return oldAccountsList
 }
 
-export function selectedAccountReducer(oldSelectedAccount = [], action: IAction) {
+function selectedAccountReducer(oldSelectedAccount:number = 0, action: AnyAction): number {
   switch (action.type) {
-    case 'SELECT_ACCOUNT':
+    case SELECT_ACCOUNT:
       return action.payload.accountID
   }
   return oldSelectedAccount
 }
 
-export function transactionsListReducer(oldTransactionsList = [], action: IAction) {
+function transactionsListReducer(oldTransactionsList: Transaction[] = [], action: AnyAction): Transaction[] {
   switch (action.type) {
-    case 'UPDATE_TRANSACTIONS_LIST':
+    case UPDATE_TRANSACTIONS_LIST:
       return action.payload.arrayOfTransactions
   }
   return oldTransactionsList
 }
 
-export function activeViewReducer(oldView = 'listView', action: IAction) {
+function activeViewReducer(oldView: string = 'listView', action: SelectActiveViewAction): string {
   switch (action.type) {
-    case 'SELECT_ACTIVE_VIEW':
+    case SELECT_ACTIVE_VIEW:
       return action.payload.view
   }
   return oldView
 }
+
+const rootReducer = combineReducers({
+  session: sessionReducer,
+  usersList: usersListReducer,
+  selectedUser: selectedUserReducer,
+  accountsList: accountsListReducer,
+  selectedAccount: selectedAccountReducer,
+  transactionsList: transactionsListReducer,
+  activeView: activeViewReducer,
+})
+
+const store = createStore(rootReducer)
+
+const action1 = selectActiveView('newView')
+store.dispatch(action1)
+const action2 = selectActiveView('updatedView')
+store.dispatch(action2)
+
+console.log(store.getState())
